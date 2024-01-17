@@ -1,0 +1,9 @@
+body {
+    background-image: url("../image/background10.jpeg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+img {
+    border-radius: 10px;
+}

@@ -7,54 +7,54 @@
     $connect = 'mysql:host='. SERVER . ';dbname='. DBNAME . ';charset=utf8';
 ?>
 <?php
-    error_reporting(0);
-    ini_set('display_errors', 0);
-    session_start();
-    $pdo = new PDO($connect,USER,PASS);
-        if(isset($_POST['insert'])) {
-            $login_success_url="";
-            $error_message = "";
-            $name = $_POST['name'];
-            $birthday = $_POST['birthday'];
-            $age = $_POST['age'];
-            $main_color = $_POST['main_color'];
-            $outline = $_POST['outline'];
-            $group_name = $_POST['group_name'];
-            $environment_name = $_POST['environment_name'];
-            $url = $_POST['url'];
-            $live_stday = $_POST['live_stday'];
-            $image = $_POST['image'];
+    // error_reporting(0);
+    // ini_set('display_errors', 0);
+    // session_start();
+    // $pdo = new PDO($connect,USER,PASS);
+    //     if(isset($_POST['update'])) {
+    //         var_dump($_POST);
+    //         $login_success_url="";
+    //         $error_message = "";
+    //         $name = $_POST['name'];
+    //         $birthday = $_POST['birthday'];
+    //         $age = $_POST['age'];
+    //         $main_color = $_POST['main_color'];
+    //         $outline = $_POST['outline'];
+    //         $group_id = $_POST['group_id'];
+    //         $environment_id = $_POST['environment_id'];
+    //         $url = $_POST['url'];
+    //         $live_stday = $_POST['live_stday'];
+    //         $image = $_POST['image'];
+    //         $id = $_POST['id'];
            
-            $sql = $pdo->prepare('update liver set name=?,birthday=?,age=?,main_color=?,outline=?,group_name=?,environment_name=?,url=?,live_stday=?,image=? where id=?');
-            if(empty($name)){
-                $error_message = '名前を入力してください';
-            }else if(empty($main_color)){
-                $error_message = 'メインカラーを入力してください';
-            }else if(empty($outline)){
-                $error_message = '紹介文を入力してください';
-            }else if(strlen($_POST['outline']) > 50){
-                $error_message = '紹介文を50文字以内で入力してください';
-            }else if(empty($url)){
-                $error_message = 'URLを入力してください';
-            }else if(empty($live_stday)){
-                $error_message = '配信開始日を入力してください';
-            }else if(empty($image)){
-                $error_message = '画像パスを入力してください';
-            }else{
-                $sql->execute([$name,$birthday,$age,$main_color,$outline,$group_name,$environment_name,$url,$live_stday,$image]);
-                $login_success_url = "update3.php";
-                header("Location: {$login_success_url}");
-                exit;
-            }
+    //         $sql = $pdo->prepare('update liver set name=?,birthday=?,age=?,main_color=?,outline=?,group_id=?,environment_id=?,url=?,live_stday=?,image=? where id=?');
+    //         if(empty($name)){
+    //             $error_message = '名前を入力してください';
+    //         }else if(empty($main_color)){
+    //             $error_message = 'メインカラーを入力してください';
+    //         }else if(empty($outline)){
+    //             $error_message = '紹介文を入力してください';
+    //         }else if(strlen($_POST['outline']) > 50){
+    //             $error_message = '紹介文を50文字以内で入力してください';
+    //         }else if(empty($url)){
+    //             $error_message = 'URLを入力してください';
+    //         }else if(empty($image)){
+    //             $error_message = '画像パスを入力してください';
+    //         }else{
+    //             $sql->execute([$name,$birthday,$age,$main_color,$outline,$group_id,$environment_id,$url,$live_stday,$image,$id]);
+    //             $login_success_url = "update3.php";
+    //             header("Location: {$login_success_url}");
+    //             exit;
+    //         }
                 
-        }
+    //     }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/frame.css">
+    <link rel="stylesheet" href="../css/style.css">
     <title>最終課題</title>
 </head>
 <body>
@@ -62,7 +62,7 @@
 <a href="menu.php">メニューに戻る</a>
 <hr>
     <table>
-        <tr><th>ID</th><th>名前</th><th>誕生日</th><th>年齢</th><th>メインカラー</th><th>紹介</th><th>所属グループ</th><th>配信環境</th><th>初配信日</th><th>配信URL</th><th>画像パス</th></tr>
+        <tr><th>ID</th><th>名前</th><th>誕生日</th><th>年齢</th><th>メインカラー</th><th>紹介</th><th>所属グループ</th><th>配信環境</th><th>初配信日</th><th>配信URL</th><th>画像パス</th><th>動画URL1</th><th>動画URL2</th></tr>
         <?php
             $pdo=new PDO($connect, USER, PASS);
             $sql=$pdo->prepare('select * from liver join liver_group on liver.group_id = liver_group.group_id join environment on liver.environment_id = environment.environment_id where id=?');
@@ -96,7 +96,7 @@
                 $sql1 = 'select * from liver_group';
                 $data1 ="";
 
-                $data1 .= "<option value='". $row['group_name'];
+                $data1 .= "<option value='". $row['group_id'];
                 $data1 .= "'>". $row['group_name']. "</option>";
 
                 if($stmt1 = $pdo->query($sql1)) {
@@ -109,7 +109,7 @@
                 $sql2 = 'select * from environment';
                 $data2 ="";
 
-                $data2 .= "<option value='". $row['environment_name'];
+                $data2 .= "<option value='". $row['environment_id'];
                 $data2 .= "'>". $row['environment_name']. "</option>";
 
                 if($stmt2 = $pdo->query($sql2)) {
@@ -120,19 +120,19 @@
                 }
 
                 echo '<td>';
-                echo '<select name="group">';
+                echo '<select name="group_id">';
                 echo $data1;
                 echo '</select>';
                 echo '</td>';
 
                 echo '<td>';
-                echo '<select name="environment">';
+                echo '<select name="environment_id">';
                 echo $data2;
                 echo '</select>';
                 echo '</td>';
                 
                 echo '<td>';
-                echo '<input type="date" name="birthday" value="', $row['live_stday'], '">';
+                echo '<input type="date" name="live_stday" value="', $row['live_stday'], '">';
                 echo '</td> ';
                 echo '<td>';
                 echo '<textarea name="url">';
@@ -142,7 +142,17 @@
                 echo '<td>';
                 echo ' <input type="text" name="image" value="', $row['image'], '">';
                 echo '</td> ';
-                echo '<td><input type="submit" value="更新"></td>';
+                echo '<td>';
+                echo '<textarea name="video1">';
+                echo $row['video1'];
+                echo '</textarea>';
+                echo '</td> ';
+                echo '<td>';
+                echo '<textarea name="video2">';
+                echo $row['video2'];
+                echo '</textarea>';
+                echo '</td> ';
+                echo '<td><input type="submit" name="update" value="更新"></td>';
                 echo '</form>';
                 echo '</tr>';
                 echo "\n";

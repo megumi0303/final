@@ -19,8 +19,8 @@
             $age = $_POST['age'];
             $main_color = $_POST['main_color'];
             $outline = $_POST['outline'];
-            $group_id = $_POST['group_id'];
-            $environment_id = $_POST['environment_id'];
+            $group_id = $_POST['group'];
+            $environment_id = $_POST['environment'];
             $url = $_POST['url'];
             $live_stday = $_POST['live_stday'];
             $image = $_POST['image'];
@@ -54,14 +54,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/frame.css">
+    <link rel="stylesheet" href="../css/style.css">
     <title>最終課題</title>
 </head>
 <body>
 <h1>新規登録</h1>
 <a href="menu.php">メニューに戻る</a>
 <hr>
-    <form action="insert2.php" method="post">
+    <form action="insert.php" method="post">
         名前：<input type="text"  class="text" name="name" style="width: 120px; height=30px"><br>
         誕生日：<input type="date" name="birthday"><br>
         年齢：<input type="text" class="text" name="age" style="width: 70px; height=30px">歳<br>
@@ -93,17 +93,21 @@
         echo '<select name="group">';
         echo $data1;
         echo '</select>';
+        echo '<a href="g_add.php">※選択肢がない場合はこちら</a>';
         echo '<br>';
 
         echo '配信環境：';
         echo '<select name="environment">';
         echo $data2;
         echo '</select>';
+        echo '<a href="e_add.php">※選択肢がない場合はこちら</a>';
         echo '<br>';
         ?>
         初配信日：<input type="date" name="live_stday"><br>
         配信URL：<textarea name="url" cols="40" rows="3"></textarea><br>
         画像パス:<input type="text" class="text" name="image" style="width: 80px; height=30px">.jpeg<br><br>
+        動画URL1：<textarea name="video1" cols="40" rows="3"></textarea><br>
+        動画URL2：<textarea name="video2" cols="40" rows="3"></textarea><br>
         <input type="submit" name="insert" value="登録" class="button">
     </form>
     <div class="error">

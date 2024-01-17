@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <link rel="stylesheet" href="../css/frame.css">
+<link rel="stylesheet" href="../css/style.css"> 
     <title>PHP最終課題</title>
 </head>
 <body>
@@ -20,14 +20,24 @@ $sql->execute([$_GET['id']]);
 foreach ($sql as $row) {
     echo '<p><img alt="image" src="../image/', $row['image'], '.jpeg" height="400" width="440"></p></div>';
     echo '<h2>', $row['name'], '</h1>';
-    echo '<h3>誕生日：¥', $row['birthday'], '</h3>';
-    echo '<h3>年齢：', $row['age'], '</h3>';
+    if(!($row['birthday'] == '0000-00-00')){
+        echo '<h3>誕生日：', $row['birthday'], '</h3>';
+    }
+    if(!($row['age'] == 0)){
+        echo '<h3>年齢：', $row['age'], '</h3>';
+    }
     echo '<h3>メインカラー：', $row['main_color'], '</h3>';
     echo '<h3>紹介：', $row['outline'], '</h3>';
     echo '<h3>所属グループ：', $row['group_name'], '</h3>';
     echo '<h3>メイン配信環境：', $row['environment_name'], '</h3>';
     echo '<h3>配信URL：', $row['url'], '</h3>';
+    //echo '<h3>配信URL：',<a href=" $row['url'] ">$row['url']</a>,'</h3>';
     echo '<h3>初配信日：', $row['live_stday'], '</h3>';
+    echo '<br>';
+    echo '<h4>おすすめ動画</h4>';
+    echo $row['video1'];
+    echo '          ';
+    echo $row['video2'];
 }
 ?>
 </body>

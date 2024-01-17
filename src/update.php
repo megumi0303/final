@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/frame.css">
+    <link rel="stylesheet" href="../css/style.css">
     <title>最終課題</title>
 </head>
 <body>
@@ -32,6 +32,9 @@
         echo '<p>','配信URL：',$row['url'],'</p>';
         echo '<p>','初配信日：',$row['live_stday'],'</p>';
         echo '<p>','画像パス：',$row['image'],'</p>';
+        echo $row['video1'];
+        echo '          ';
+        echo $row['video2'];
         echo '</div>';
         echo '<form action="update2.php" method="post">';
         echo '<input type="hidden" name="id" value="',$row['id'],'">';
