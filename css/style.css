@@ -1,9 +1,19 @@
 body {
-    background-image: url("../image/background10.jpeg");
+    background-image: url("../image/background21.jpeg");
     background-repeat: no-repeat;
     background-attachment: fixed;
+    font-family: 'Hannotate SC',sans-serif;
 }
 
 img {
     border-radius: 10px;
+}
+
+.error{
+    color: red;
+    text-align: center;
+}
+
+.btn{
+    text-align: center;
 }

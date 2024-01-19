@@ -10,6 +10,29 @@
 <html lang="ja">
 <head>
 <link rel="stylesheet" href="../css/style.css"> 
+<style>
+.text{
+  font-size: 25px;
+}
+.button {
+    display: block;
+    text-align: center;
+    vertical-align: middle;
+    /* text-decoration: none; */
+    height: 50px;
+    width: 120px;
+    /* padding: 1rem 4rem; */
+    font-weight: bold;
+    border: 2px solid #a913ba;
+    color: #a913ba;
+    border-radius: 100vh;
+    transition: 0.5s;
+}
+.button:hover {
+    color: #fff;
+    background: #eb95f5;
+}
+</style>
     <title>PHP最終課題</title>
 </head>
 <body>
@@ -19,25 +42,32 @@ $sql=$pdo->prepare('select * from liver join liver_group on liver.group_id = liv
 $sql->execute([$_GET['id']]);
 foreach ($sql as $row) {
     echo '<p><img alt="image" src="../image/', $row['image'], '.jpeg" height="400" width="440"></p></div>';
-    echo '<h2>', $row['name'], '</h1>';
+    echo '<h1>',$row['name'],'</h1><br>';
+    echo '<div class="text">';
     if(!($row['birthday'] == '0000-00-00')){
-        echo '<h3>誕生日：', $row['birthday'], '</h3>';
+        echo '誕生日：', $row['birthday'],'<br>';
     }
     if(!($row['age'] == 0)){
-        echo '<h3>年齢：', $row['age'], '</h3>';
+        echo '年齢：', $row['age'],'<br>';
     }
-    echo '<h3>メインカラー：', $row['main_color'], '</h3>';
-    echo '<h3>紹介：', $row['outline'], '</h3>';
-    echo '<h3>所属グループ：', $row['group_name'], '</h3>';
-    echo '<h3>メイン配信環境：', $row['environment_name'], '</h3>';
-    echo '<h3>配信URL：', $row['url'], '</h3>';
-    //echo '<h3>配信URL：',<a href=" $row['url'] ">$row['url']</a>,'</h3>';
-    echo '<h3>初配信日：', $row['live_stday'], '</h3>';
-    echo '<br>';
-    echo '<h4>おすすめ動画</h4>';
-    echo $row['video1'];
-    echo '          ';
-    echo $row['video2'];
+    echo 'メインカラー：', $row['main_color'],'<br>';
+    echo '紹介：', $row['outline'],'<br>';
+    echo '所属グループ：', $row['group_name'],'<br>';
+    echo 'メイン配信環境：', $row['environment_name'],'<br>';
+    $url = $row['url'];
+    echo '配信URL：<a href="', $url,'">', $url ,'</a><br>';
+    echo '初配信日：', $row['live_stday'];
+    echo '<br><br>';
+    echo 'おすすめ動画','<br>';
+    $video1 = $row['video1'];
+    $video2 = $row['video2'];
+    echo '<iframe width="400" height="225" src="', $video1,'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    echo '　　';
+    echo '<iframe width="400" height="225" src="', $video2,'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    echo '</div>';
+    echo '<form action="list.php" method="post">';
+    echo '<input type="submit" class="button" value="戻る">';
+    echo '</form>';
 }
 ?>
 </body>

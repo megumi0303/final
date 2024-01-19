@@ -13,6 +13,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
     <title>最終課題</title>
+    <style>
+    .text{
+        font-size: 18px;
+    }
+    .button {
+        display: block;
+        text-align: center;
+        vertical-align: middle;
+        /* text-decoration: none; */
+          height: 50px;
+        width: 120px;
+        /* padding: 1rem 4rem; */
+        font-weight: bold;
+        border: 2px solid #e83333;
+        color: #e83333;
+        border-radius: 100vh;
+        transition: 0.5s;
+    }
+    .button:hover {
+        color: #fff;
+        background: #eb6c6c;
+    }
+    .btn{
+        display: flex;
+        justify-content: space-between;
+        place-items: center;
+        padding-right: 600px;
+    }
+    </style>
 </head>
 <body>
 <h1>更新</h1>
@@ -21,25 +50,39 @@
 <?php
     $pdo=new PDO($connect, USER, PASS);
     foreach($pdo->query('select * from liver join liver_group on liver.group_id = liver_group.group_id join environment on liver.environment_id = environment.environment_id') as $row){
-        echo '<p><img alt="image" src="../image/', $row['image'], '.jpeg" height="150" width="170"></p>';
+        echo '<div class="btn">';
+        echo '<img alt="image" src="../image/', $row['image'], '.jpeg" height="250" width="250">';
+        echo '<form action="update2.php" method="post">';
+        echo '<input type="hidden" name="id" value="',$row['id'],'">';
+        echo '<button type="submit" class="button">更新</button><br>';
+        echo '</form>';
+        echo '</div>';
+        echo '<div class="text">';
         echo '<p>','名前：',$row['name'],'</p>';
-        echo '<p>','誕生日：',$row['birthday'],'</p>';
-        echo '<p>','年齢：',$row['age'],'</p>';
+        if(!($row['birthday'] == '0000-00-00')){
+          echo '<p>誕生日：', $row['birthday'],'</p>';
+        }
+        if(!($row['age'] == 0)){
+          echo '<p>年齢：', $row['age'],'歳</p>';
+        }
         echo '<p>','メインカラー：',$row['main_color'],'</p>';
         echo '<p>','紹介：',$row['outline'],'</p>';
         echo '<p>','所属グループ：',$row['group_name'],'</p>';
         echo '<p>','配信環境：',$row['environment_name'],'</p>';
-        echo '<p>','配信URL：',$row['url'],'</p>';
+        $url = $row['url'];
+        echo '<p>','配信URL：<a href="', $url,'">', $url ,'</a></p>';
         echo '<p>','初配信日：',$row['live_stday'],'</p>';
-        echo '<p>','画像パス：',$row['image'],'</p>';
-        echo $row['video1'];
-        echo '          ';
-        echo $row['video2'];
-        echo '</div>';
-        echo '<form action="update2.php" method="post">';
-        echo '<input type="hidden" name="id" value="',$row['id'],'">';
-        echo '<button type="submit" class="button">更新</button>';
-        echo '</form>';
+        echo '<p>','画像パス：',$row['image'],'.jpeg</p>';
+        $video1 = $row['video1'];
+        $video2 = $row['video2'];
+        echo '<p>','おすすめ動画','</p>';
+        echo '<iframe width="400" height="225" src="', $video1,'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+        echo '　　';
+        echo '<iframe width="400" height="225" src="', $video2,'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+        // echo '<form action="update2.php" method="post">';
+        // echo '<input type="hidden" name="id" value="',$row['id'],'">';
+        echo '<hr>';
+        // echo '</form>';
         echo '</div>';
     }
 ?>

@@ -42,22 +42,37 @@
 #column img {
   border-radius: 10px;
 }
+.text{
+  text-align: center;
+  font-size: 25px;
+}
+.name{
+  font-size: 20px;
+}
+p{
+  font-size: 35px;
+}
     </style>
 </head>
 <body>
-    <h2>推しAmongUs配信者リスト</h2>
-        <?php
-            echo '<div id="column" class="column04">';
-            echo '<ul>';
-            $pdo= new PDO($connect,USER,PASS);
-            $sql=$pdo->query('select * from liver');            
-            foreach ($sql as $row) {
-              $id=$row['id'];
-              echo '<li><a href="detail.php?id=', $id, '"><img alt="image" src="../image/', $row['image'], '.jpeg" height="240" width="260">';
-              echo '<h3><a href="detail.php?id=', $id, '">', $row['name'], '</a></h3></li>';
-            }
-            echo '</ul>';
-            echo '</div>';
-          ?>
+    <div class="text">
+    <p>推しAmongUs配信者リスト</p>
+    <a href="menu.php">メニューに戻る</a>
+    </div>
+      <?php
+        echo '<div id="column" class="column04">';
+        echo '<ul>';
+        $pdo= new PDO($connect,USER,PASS);
+        $sql=$pdo->query('select * from liver');            
+        foreach ($sql as $row) {
+          $id=$row['id'];
+          echo '<div class="name">';
+          echo '<li><a href="detail.php?id=', $id, '"><img alt="image" src="../image/', $row['image'], '.jpeg" height="240" width="260">';
+          echo '<a href="detail.php?id=', $id, '">', $row['name'], '</a></li>';
+          echo '</div>';
+        }
+        echo '</ul>';
+        echo '</div>';
+      ?>
 </body>
 </html>
